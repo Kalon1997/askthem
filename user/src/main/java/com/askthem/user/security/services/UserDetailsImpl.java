@@ -12,12 +12,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-@Data
-@Component
+
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
     private long id;

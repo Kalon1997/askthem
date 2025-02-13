@@ -1,5 +1,6 @@
 package com.askthem.user.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,7 +10,7 @@ import lombok.*;
 @Entity
 @Getter
 @Setter
-@Table(name="User")
+@Table(name="Users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,7 +20,9 @@ public class User {
     private String userName;
 
     @Column
-    @Transient
+    private String email;
+
+    @Column
     private String password;
 
     public String getEmail() {
@@ -54,7 +57,5 @@ public class User {
         this.id = id;
     }
 
-    @Column
-    private String email;
 
 }
