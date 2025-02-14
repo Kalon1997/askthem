@@ -7,6 +7,7 @@ import com.askthem.user.model.User;
 import com.askthem.user.repository.UserRepository;
 import com.askthem.user.security.jwt.JwtUtils;
 import com.askthem.user.security.services.UserDetailsImpl;
+import com.askthem.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +23,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -56,6 +60,11 @@ public class UserController {
         String jwt = jwtUtils.generateJwtToken(authentication);
         UserDetailsImpl userDetails =(UserDetailsImpl) authentication.getPrincipal();
         return ResponseEntity.ok().body(new LoginRes(userDetails.getEmail(), jwt));
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<?> profile() throws Exception{
+        return ResponseEntity.ok().body(userService.getCurrentUser());
     }
 
     @PostMapping("/test")

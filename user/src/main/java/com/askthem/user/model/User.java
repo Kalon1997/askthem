@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -11,7 +13,7 @@ import lombok.*;
 @Getter
 @Setter
 @Table(name="Users")
-public class User {
+public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -23,6 +25,7 @@ public class User {
     private String email;
 
     @Column
+    @JsonIgnore
     private String password;
 
     public String getEmail() {
