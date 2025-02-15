@@ -43,6 +43,7 @@ public class UserController {
         User user = new User();
         user.setEmail(userRegister.getEmail());
         user.setPassword(encoder.encode(userRegister.getPassword()));
+        user.setRole("USER");
         System.out.println(user);
         // will set userName later
         return ResponseEntity.ok().body(userRepository.save(user));
@@ -57,7 +58,7 @@ public class UserController {
             throw new RuntimeException(e);
         }
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication,"USER" );
         UserDetailsImpl userDetails =(UserDetailsImpl) authentication.getPrincipal();
         return ResponseEntity.ok().body(new LoginRes(userDetails.getEmail(), jwt));
     }

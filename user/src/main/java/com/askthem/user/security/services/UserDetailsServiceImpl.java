@@ -22,6 +22,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if(user == null)  {
             throw new UsernameNotFoundException("given user was not found");
         }
-        return UserDetailsImpl.build(user);
+        return UserDetailsImpl.build(user,user.getRole());
     }
 }

@@ -12,6 +12,15 @@ import org.springframework.stereotype.Component;
 public class UserRegister {
     private String email;
     private String password;
+    private String role;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public String getPassword() {
         return password;

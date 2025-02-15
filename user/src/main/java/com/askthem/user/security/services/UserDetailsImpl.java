@@ -45,14 +45,14 @@ public class UserDetailsImpl implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static UserDetailsImpl build(User user) {
+    public static UserDetailsImpl build(User user, String customAuthorityRole ) {
 
         return new UserDetailsImpl(
                 user.getId(),
                 user.getUserName(),
                 user.getEmail(),
                 user.getPassword(),
-                Arrays.asList(new SimpleGrantedAuthority("USER")));
+                Arrays.asList(new SimpleGrantedAuthority(customAuthorityRole)));
     }
 
     public long getId() {

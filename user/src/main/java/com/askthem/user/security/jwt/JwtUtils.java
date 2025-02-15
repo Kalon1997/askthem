@@ -27,11 +27,12 @@ public class JwtUtils {
         byte[] keyBytes = Decoders.BASE64.decode(jwtSecret);
         return Keys.hmacShaKeyFor(keyBytes);
     }
-    public String generateJwtToken(Authentication authentication) {
+    public String generateJwtToken(Authentication authentication, String role) {
 
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
         System.out.println(" generateJwtToken --- "+userPrincipal);
         return Jwts.builder()
+                .claim("role",role)
                 .setSubject((userPrincipal.getEmail()))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpiry))
@@ -40,12 +41,21 @@ public class JwtUtils {
     }
 
     public String getEmailFromJwtToken(String token) {
-        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+        return Jwts.parser()
+                .verifyWith(getKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload().getSubject();
+//                .setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
     }
 
     public boolean validateJwtToken(String authToken) throws CustomException, Exception{
         try {
-            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
+//            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);  jwt 0.11
+            Jwts.parser()    // 0.12
+                    .setSigningKey(getKey())
+                    .build()
+                    .parseClaimsJws(authToken);
             return true;
         } catch (MalformedJwtException e) {
 //            throw new CustomException("MalformedJwtException", 401);
