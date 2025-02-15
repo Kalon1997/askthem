@@ -64,7 +64,9 @@ public class UserController {
 
     @GetMapping("/profile")
     public ResponseEntity<?> profile() throws Exception{
-        return ResponseEntity.ok().body(userService.getCurrentUser());
+        User user = userService.getCurrentUser();
+        System.out.println("====user==="+user);
+        return ResponseEntity.ok().body(user);
     }
 
     @PostMapping("/test")

@@ -19,7 +19,8 @@ public class UserService {
     }
 
     public User getCurrentUser() {
-        Long id = this.getCurrentUserId();
+        long id = this.getCurrentUserId();
+        System.out.println("====getCurrentUser==="+id);
         return userRepository.findById(id).get();
 //        return userRepository.getOne(id);  // SerializationFeature.FAIL_ON_EMPTY_BEANS ex
     }
