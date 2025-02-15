@@ -29,7 +29,7 @@ public class User{
     private String password;
 
     @Column
-    private String role;
+    private String role; // role based authorization
 
     public String getRole() {
         return role;
