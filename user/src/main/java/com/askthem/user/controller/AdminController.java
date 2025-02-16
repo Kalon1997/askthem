@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.ZonedDateTime;
+
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {
@@ -41,7 +43,10 @@ public class AdminController {
 
     @PostMapping("/users")
     public ResponseEntity<?> listUsers(@RequestBody UserListRequest userListRequest){
-        return ResponseEntity.status(200).body(userRepository.findAll());
+        ZonedDateTime from = ZonedDateTime.parse(userListRequest.getFromDate());
+        ZonedDateTime to = ZonedDateTime.parse(userListRequest.getToDate());
+        return ResponseEntity.status(200).body(userRepository
+                .findByCreatedAtBetween(from, to));
     }
 
     @PostMapping("/register")
