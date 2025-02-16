@@ -6,6 +6,7 @@ import io.jsonwebtoken.security.SignatureException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -20,6 +21,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> throwNewCustomException(Exception ex){ //WebRequest request
         ErrorResponse errorResponse = new ErrorResponse();
+        System.out.println("===========GlobalExceptionHandler==========="+ex);
         ex.printStackTrace();  // will remove
         if(ex instanceof CustomException){
             errorResponse.setMessage(ex.getMessage());
@@ -70,6 +72,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             errorResponse.setMessage("Null Pointer Exception");
             return ResponseEntity.status(404).body(errorResponse);
         }
+
+        if(ex instanceof UsernameNotFoundException){
+            errorResponse.setMessage("User not found");
+            return ResponseEntity.status(404).body(errorResponse);
+        }
+
 
         errorResponse.setMessage("Something went wrong");
         return ResponseEntity.status(500).body(errorResponse);

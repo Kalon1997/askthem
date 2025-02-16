@@ -51,6 +51,7 @@ public class JwtUtils {
 
     public boolean validateJwtToken(String authToken) throws CustomException, Exception{
         try {
+            System.out.println("===========validateJwtToken===========");
 //            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);  jwt 0.11
             Jwts.parser()    // 0.12
                     .setSigningKey(getKey())
