@@ -46,7 +46,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                         userDetails.getAuthorities());
                 System.out.println("===getAuthorities=="+userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
+                System.out.println("===authentication=="+authentication.toString());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception e) {
