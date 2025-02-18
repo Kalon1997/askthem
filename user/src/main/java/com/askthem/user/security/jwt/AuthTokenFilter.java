@@ -41,14 +41,16 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 //System.out.println("username is "+username);
 
                 UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+                System.out.println("===========loadUserByUsername==========="+userDetails.toString());
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null,
                         userDetails.getAuthorities());
+                System.out.println("===getAuthorities=="+userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
+                System.out.println("===authentication=="+authentication.toString());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("=================="+e.getMessage());
             handlerExceptionResolver.resolveException(request, response, null, e);
 //            throw new RuntimeException(e);
         }

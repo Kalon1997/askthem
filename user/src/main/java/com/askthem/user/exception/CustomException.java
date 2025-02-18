@@ -3,6 +3,7 @@ package com.askthem.user.exception;
 public class CustomException extends Exception{
     private String message;
     private int code;
+    public CustomException(){}
     public CustomException(String message, int code){
         this.message = message;
         this.code = code;

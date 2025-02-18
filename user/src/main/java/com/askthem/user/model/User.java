@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.time.ZonedDateTime;
+import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,7 +31,16 @@ public class User{
     private String password;
 
     @Column
-    private String role;
+    private String role; // role based authorization
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="created_at")
+    private ZonedDateTime createdAt;
+
+    @PrePersist
+    private void onCreate(){
+        createdAt = ZonedDateTime.now();
+    }
 
     public String getRole() {
         return role;
