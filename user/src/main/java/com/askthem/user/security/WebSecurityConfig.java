@@ -73,7 +73,7 @@ public class WebSecurityConfig {
                     .exceptionHandling(exp -> exp.authenticationEntryPoint(unauthorizedHandler))
                     .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                     .authorizeHttpRequests(auth -> auth
-                            .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
+                            .requestMatchers("/api/auth/register", "/api/auth/login", "/api/auth/validateToken").permitAll()
                             .requestMatchers("/api/auth/**").hasAuthority("USER")
                             .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
 //                        .requestMatchers("/api/test/**").permitAll()
@@ -89,7 +89,7 @@ public class WebSecurityConfig {
 //
 //            return http.build();
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             throw new RuntimeException(e);
         }
 

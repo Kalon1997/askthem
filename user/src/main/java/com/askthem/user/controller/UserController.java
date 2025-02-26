@@ -3,11 +3,14 @@ package com.askthem.user.controller;
 import com.askthem.user.dto.request.UserLogin;
 import com.askthem.user.dto.response.LoginRes;
 import com.askthem.user.dto.request.UserRegister;
+import com.askthem.user.dto.response.UserDto;
+import com.askthem.user.exception.CustomException;
 import com.askthem.user.model.User;
 import com.askthem.user.repository.UserRepository;
 import com.askthem.user.security.jwt.JwtUtils;
 import com.askthem.user.security.services.UserDetailsImpl;
 import com.askthem.user.service.UserService;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -74,4 +77,18 @@ public class UserController {
     public ResponseEntity<?> test(){
         return ResponseEntity.ok().body("hello");
     }
+
+
+    @PostMapping("/validateToken")
+    public ResponseEntity<UserDto> validateToken(@RequestParam(name = "token") String token) throws CustomException, Exception{
+        try {
+//            throw new CustomException("validateToken failed", 401);
+//            return ResponseEntity.ok(null);
+            return ResponseEntity.ok(userService.validateToken(token));
+        }catch (Exception e){
+            throw new CustomException(e.getMessage(), 401);
+        }
+
+    }
+
 }
